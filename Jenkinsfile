@@ -32,7 +32,7 @@ pipeline{
         }
         stage('Post Build'){
             steps{
-                sh 'echo "Build Successful"'
+                sh 'echo "Build Successful12"'
             }
         }
     }
