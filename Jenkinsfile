@@ -39,9 +39,11 @@ pipeline{
     post{
         success{
             emailext body: 'Build is successful', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
+            slackSend channel: 'test', message: 'Build Successful'
         }
         failure{
             emailext body: 'Build has failed', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
+            slackSend channel: 'test', message: 'Build Failed'
         }
     }
 }
