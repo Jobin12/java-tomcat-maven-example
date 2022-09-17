@@ -1,43 +1,33 @@
-pipeline {
+pipeline{
     agent any
-    
-    stages {
-        stage ('SCM checkout') {
-            steps {
-                git 'https://github.com/Akshay369vm/java-tomcat-maven-example.git'
+    stages{
+        stage('SCM Checkout'){
+            steps{
+                git 'https://github.com/Jobin12/java-tomcat-maven-example.git'
             }
         }
         stage('sonarqube analysis') {
             environment {
-            SCANNER_HOME = tool 'SonarQube'
-            PROJECT_NAME = "Java-maven"
-        }
-        steps {
-            script {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=$PROJECT_NAME \
-                    -Dsonar.java.binaries=\"target/classes/\"'''
+                SCANNER_HOME = tool 'SonarQube'
+                PROJECT_NAME = "Java-maven2"
+            }
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube') {
+                        sh '''$SCANNER_HOME -Dsonar.projectKey=$PROJECT_NAME \
+                        -Dsonar.java.binaries=\"target/classes/\"'''
+                    }
                 }
             }
+        }
+        stage('Build'){
+            steps{
+                sh 'mvn package'
             }
         }
-        stage ('build') {
-            steps {
-                sh "mvn package"
-            }
-        }
-        stage('deploy'){
-            steps {
-                sh""" sudo cp /var/lib/jenkins/workspace/Java-Project/target/java-tomcat-maven-example.war /opt/tomcat/webapps
-                sudo service tomcat restart
-                """
-            }
-        }
-        stage ('post build') {
-            steps {
-                sh """echo "build Passed"
-                echo "Hello world"
-                """
+        stage('Deploy'){
+            steps{
+                sh 'sudo cp /var/lib/jenkins/workspace/maven-test/target/java-tomcat-maven-example.war /opt/apache-tomcat-9.0.65/webapps'
             }
         }
     }
