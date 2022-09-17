@@ -30,5 +30,10 @@ pipeline{
                 sh 'sudo cp /var/lib/jenkins/workspace/maven-test/target/java-tomcat-maven-example.war /opt/apache-tomcat-9.0.65/webapps'
             }
         }
+        stage('Post Build'){
+            steps{
+                sh 'echo "Build Successful"'
+            }
+        }
     }
 }
