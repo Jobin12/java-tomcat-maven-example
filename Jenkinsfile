@@ -35,13 +35,13 @@ pipeline{
                 sh 'echo "Build Successful"'
             }
         }
-        post{
-            success{
-                emailext body: 'Build is successful', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
-            }
-            failure{
-                emailext body: 'Build has failed', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
-            }
+    }
+    post{
+        success{
+            emailext body: 'Build is successful', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
+        }
+        failure{
+            emailext body: 'Build has failed', subject: 'Build Status', to: 'jobinsobachan@gmail.com'
         }
     }
 }
